@@ -79,7 +79,7 @@ async function loadFiles() {
       toggleButton.innerText = `View More`;
       toggleButton.setAttribute("modalToggle", `#modal-${index}`);
       
-      const citation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['title']}. <i>${paper['Journal Name']}</i>. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`
+      const citation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. <i>${paper['Journal Name']}</i>. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`
 
       const modal = document.createElement("div");
       modal.id = `modal-${index}`;
