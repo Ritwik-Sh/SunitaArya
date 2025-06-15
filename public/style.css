@@ -1,0 +1,260 @@
+body {
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Economica', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+    scrollbar-color: transparent transparent; /* Chrome, Safari and Opera */
+}
+
+.circular-menu {
+    position: fixed;
+    left: -50vh;
+    top: 10vh;
+    width: 80vh;
+    height: 80vh;
+    pointer-events: none;
+    z-index: 1000;
+    background: var(--text);
+    border: 10px solid var(--primary);
+    transition: border-image 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 50%;
+}
+.circular-menu span {
+    display: none;
+    color: var(--secondary);
+    z-index: 1001;
+    position: relative;
+    left: 115%;
+    top: 50%;
+    scale: 2;
+}
+.circular-menu ul {
+    text-align: left !important;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    left: 20%;
+    top: 10%;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+}
+.circular-menu li {
+    position: absolute;
+    width: 16vh;
+    
+    top: 50%;
+    transform-origin: left center;
+    pointer-events: auto;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.circular-menu li a {
+    display: block;
+    color: var(--secondary);
+    font-size: 2.2em;
+    font-family: 'Economica', sans-serif;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+    /* Let text rotate with menu */
+    transform: none !important;
+}
+.circular-menu li a.active,
+.circular-menu li a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 8px var(--text), 0 0 2px var(--text);
+}
+/* Large white arc */
+.circular-menu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120vh;
+    height: 120vh;
+    border-radius: 50%;
+    
+    border-right: none;
+    border-bottom: none;
+    z-index: 0;
+    box-sizing: border-box;
+    transform: translate(-30%, -10%);
+}
+
+main {
+    margin-left: 32vw;
+    padding: 0 20px;
+}
+.section {
+    width: 100%;
+    height: 90vh;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--text);
+    h1 {
+        margin: 0;  /* Remove margins from h1 */
+        position: relative;
+        color: var(--accent);
+        font-size: 2em;
+    }
+}
+
+.section[for="name"] {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+    vertical-align: text-bottom;
+    
+    line-height: 1;  /* Add this to reduce vertical spacing */
+    h1 {
+        font-family: "Monoton", Economica, sans-serif;
+        text-align: end;
+        font-size: 16vi !important;
+    }
+
+    #social {
+        font-size: 1.5vw;
+        margin-top: 3vi;
+    } #social span {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 2em;
+        background: transparent;;
+    } #social a, #social a:visited {
+        color: var(--text);
+        display: inline-block;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    } #social a:hover {
+        background: var(--secondary);
+        box-shadow: 0 0 10px var(--primary);
+        border-radius: 16px;
+        padding: 5px 10px;
+        margin-left: 12px;
+        margin-right: 12px;
+        transition: all 0.5s ease-in-out;
+        scale: 1.2;
+        label {
+            display: inline-block;
+            transition: all 0.5s ease-in-out;
+        }
+    } #social {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        transition: all 0.3s ease-in-out;
+        color: var(--text)
+    }
+    #social label {
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+} .section[for="name"] h1:nth-child(2) {
+    color: var(--text) !important;
+    margin: 0;
+}
+
+.section[for="Edited"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.flip-card-front {
+    background-color: var(--background);
+    overflow: hidden;
+}
+
+.flip-card-front img, .flip-card-front iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+.flip-card-back {
+    background-color: var(--background);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid var(--text);
+}
+
+.flip-card-back h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.flip-card-back p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+.pdf-preview {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background);
+}
+
+/* Interactive 3D tilt effect */
+.interactive3dtilt {
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+}
+
+@media (max-width: 900px) {
+    .circular-menu {
+        display: none;
+        scrollbar-color: initial;
+    }
+}

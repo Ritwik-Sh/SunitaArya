@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Sunita Arya</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../db/icon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Economica:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="timeline.css">
+    <script src="https://kit.fontawesome.com/d63d2ac69c.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="imports.css">
+    <link rel="stylesheet" href="global/style.css">
+</head>
+<body data-spy="scroll" data-target="#circularMenu" data-offset="0">
+    <nav class="circular-menu" id="circularMenu">
+        <ul>            
+            <li><a href="#section1" data-section="section1">Home</a></li>
+            <li><a href="#section2" data-section="section2">Edited</a></li>
+        </ul>        
+        <span class="fa-solid fa-person"></span>
+        <span class="fa-solid fa-book"></span>
+    </nav>
+    <main>
+        <section id="section1" class="section" for="name">
+            <h1>Sunita</h1>
+            <h1>Arya</h1>
+            <div id="social">
+                <a href="https://www.youtube.com/@prof.sunitaarya" target="_blank"><span class="fa-brands fa-youtube"></span><label for="youtube">Youtube</label></a>
+                <a href="https://www.researchgate.net/profile/Sunita-Arya-2/" target="_blank"><span class="fa-brands fa-researchgate"></span><label for="ResearchGate">ResearchGate</label></a>
+                <a href="https://scholar.google.com/citations?user=J0NFtBEAAAAJ" target="_blank"><span class="fa-brand fa-google-scholar"></span><label for="GoogleScholar">Google Scholar</label></a>
+                <a href="researchPub/" target="_blank"><span class="fa-solid fa-file"></span><label for="ResearchPub">Research Articles</label></a>
+            </div>
+        </section>
+        <section id="section2" class="section" for="Edited">
+            <div class="flip-card interactive3dtilt" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="https://www.faunajournal.com/images/cover_page.jpg" alt="Front Cover">
+                    </div>
+                    <div class="flip-card-back">
+                        <h4>Cheif Editor</h4>
+                        <p>International Journal of Fauna and Biological Sciences</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="scroller.js"></script>
+    <script src="horizontal-scroll.js"></script>
+    <script src="global/others.js"></script>
+    <script src="loadEdited.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
+</html>

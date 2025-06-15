@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Publications | Sunita Arya</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../db/icon.png" type="image/png">
+    <link rel="stylesheet" href="../global/style.css">
+    <link rel="stylesheet" href="../global/modal.css">
+</head>
+<body>
+    <div id="researchPapersContainer"></div>
+
+    <!-- Load PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    </script>
+    
+    <!-- Load XLSX library -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <!-- Load your script -->
+    <script src="loadPublications.js"></script>
+    <script src="../global/modal.js"></script>
+</body>
+</html>
