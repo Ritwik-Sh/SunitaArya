@@ -16,7 +16,6 @@ async function loadFiles() {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
-
     const resPapers = rawData.map((entry) => {
       const clean = {};
       for (const key in entry) {
@@ -25,10 +24,14 @@ async function loadFiles() {
       return clean;
     });
 
+    // Sort papers by year in reverse order (newest first)
+    resPapers.sort((a, b) => b['Year'] - a['Year']);
+
     const resPaperContainer = document.querySelector("#researchPapersContainer");
     resPaperContainer.innerHTML = "";
 
     resPapers.forEach((paper, index) => {
+      if (paper["Year"] <= 2010) return;
       const paperDiv = document.createElement("div");
       paperDiv.className = "paper";
 
@@ -89,9 +92,11 @@ async function loadFiles() {
           <button class="close-modal">X</button>
           <h2>${paper['Title']}</h2>
           <table>
-            <tr><th>Journal: </td><td>${paper['Journal Name']}<br>(${paper['ISSN']})</td></tr>
-            <tr><th>Year: </td><td>${paper['Year']}</td></tr>
-            <tr><th>Authors: </td><td>${paper['Author'].split(';').join("<br>")}</td></tr>
+            <tr><th>Journal: </th><td>${paper['Journal Name']}<br>(${paper['ISSN']})</td></tr>
+            <tr><th>Year: </th><td>${paper['Year']}</td></tr>
+            <tr><th>Authors: </th><td>${paper['Author'].split(';').join("<br>")}</td></tr>
+            <tr><th>Volume and Issue: </th><td>${paper["Volume"]}{${paper["Issue"]}}</td></tr>
+            <tr><th>Pages: </th><td>${paper["Page Number"]}</td></tr>
           </table>
           <hr>
           <div class="text-box btn">
@@ -132,17 +137,22 @@ async function loadFiles() {
 async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
   try {
     console.log("📄 Fetching PDF:", pdfUrl);
-    
     const response = await fetch(`/proxy-pdf?url=${encodeURIComponent(pdfUrl)}`);
+    console.log("Response status:", response.status, response.statusText);
+    console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+    
     if (!response.ok) {
       throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
     }
     
     const pdfBlob = await response.blob();
+    console.log("Content-Type:", pdfBlob.type);
 
-    if (pdfBlob.size < 1000) {
-      throw new Error("PDF file too small, likely an error response");
-    }
+    // if (pdfBlob.size < 1000) {
+    //   console.log("PDF blob size:", pdfBlob.size, "bytes for URL:", pdfUrl);
+    //   throw new Error(`PDF file too small (${pdfBlob.size} bytes), likely an error response for URL: ${pdfUrl}`);
+
+    // }
 
     const pdfData = new Uint8Array(await pdfBlob.arrayBuffer());
     
@@ -176,7 +186,7 @@ async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
     
     console.log("✅ PDF thumbnail rendered successfully");
   } catch (error) {
-    console.error("❌ Error rendering PDF thumbnail:", error.message);
+    console.error("❌ Error rendering PDF thumbnail for the URL", pdfUrl, " :", error);
     
     // Hide loading indicator and show error
     loadingDiv.style.display = "none";

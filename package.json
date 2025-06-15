@@ -87,6 +87,7 @@
     "detect-libc": "^2.0.4",
     "devtools-protocol": "^0.0.1452169",
     "docker": "^1.0.0",
+    "dotenv": "^16.5.0",
     "dox": "^0.8.1",
     "dunder-proto": "^1.0.1",
     "eachr": "^3.3.0",

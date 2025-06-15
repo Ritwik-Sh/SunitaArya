@@ -70,6 +70,8 @@ function handlePdfResponse(response, pdfUrl, res) {
     });
 }
 
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
@@ -275,17 +277,17 @@ function fetchWithHeaders(url, headers) {
           const buffer = Buffer.concat(chunks);
           
           // Check if it's a PDF
-          if (buffer.length >= 4 && buffer.toString("ascii", 0, 4).startsWith("%PDF")) {
+          if (buffer.toString("ascii", 0, 4).startsWith("%PDF")) {
             console.log("✅ Found direct PDF");
             resolve(buffer);
             return;
           }
           
           // Check if it's a very small response (likely an error page)
-          if (buffer.length < 1000) {
-            reject(new Error("Response too small, likely blocked"));
-            return;
-          }
+          // if (buffer.length < 1000) {
+          //   reject(new Error("Response too small, likely blocked"));
+          //   return;
+          // }
           
           // If not PDF and we haven't tried parsing HTML yet
           if (attemptCount < 2) {
