@@ -5,7 +5,7 @@ const http = require("http");
 const { URL } = require("url");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // PDF cache using Map
 const pdfCache = new Map();
