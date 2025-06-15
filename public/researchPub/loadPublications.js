@@ -133,7 +133,7 @@ async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
   try {
     console.log("📄 Fetching PDF:", pdfUrl);
     
-    const response = await fetch(`/fetch-pdf?url=${encodeURIComponent(pdfUrl)}`);
+    const response = await fetch(`/proxy-pdf?url=${encodeURIComponent(pdfUrl)}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
     }
@@ -175,18 +175,19 @@ async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
     canvas.style.display = "block";
     
     console.log("✅ PDF thumbnail rendered successfully");
-
   } catch (error) {
     console.error("❌ Error rendering PDF thumbnail:", error.message);
     
     // Hide loading indicator and show error
+    loadingDiv.style.display = "none";
+    canvas.style.display = "none";
+    
     const placeholder = document.createElement("div");
     placeholder.classList.add("pdf-placeholder");
     placeholder.classList.add("thumbnail-item");
     placeholder.textContent = "No PDF available";
-    paperDiv.appendChild(placeholder);
-  
-    // Hide canvas
-    canvas.style.display = "none";
+    
+    // Replace the canvas with the placeholder in its parent container
+    canvas.parentElement.appendChild(placeholder);
   }
 }

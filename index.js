@@ -423,5 +423,5 @@ function getPDFLikelihoodScore(url) {
 }
 
 app.listen(PORT, () => {
-  console.log(`✅ PDF thumbnail server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
