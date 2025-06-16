@@ -128,7 +128,7 @@ main {
 
     #social {
         font-size: 1.5vw;
-        margin-top: 3vi;
+        z-index: 1000;
     } #social span {
         display: inline-block;
         margin-right: 10px;
@@ -173,6 +173,7 @@ main {
     flex-wrap: wrap;
     gap: 2rem;
     padding: 2rem;
+    padding-right: 20% !important;
 }
 
 .flip-card {
@@ -247,10 +248,7 @@ main {
 }
 
 /* Interactive 3D tilt effect */
-.interactive3dtilt {
-    transition: transform 0.1s ease;
-    transform-style: preserve-3d;
-}
+
 
 @media (max-width: 900px) {
     .circular-menu {

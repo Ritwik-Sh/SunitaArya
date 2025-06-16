@@ -1,6 +1,6 @@
 #researchPapersContainer {
     width: 100%;
-    height: 98vh;
+    height: 97.5vh;
     overflow: auto;
     padding: 20px;
     box-sizing: border-box;
@@ -94,6 +94,8 @@ body {
     background: var(--background);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scrollbar-width: 0;
+    scrollbar-color: transparent;
 }
 
 /* Responsive design */
@@ -130,15 +132,26 @@ body {
         padding: 5px;
         margin: 10px;
         margin-left: 0;
+        cursor: pointer
     }
-    text-box {
+    .text-box {
         text-align: left !important;
         .copy-button {
-            display: block;;
             all: unset;
+            display: block;
             background: none;
             color: var(--text);
-            margin-left: 50%;
+            margin-left: 90%;
+            cursor: pointer;
+            border-radius: 8px;
+            border-bottom: solid 2px var(--text);
+            transition: ease-out 0.25s;
+            padding: 5px;
+        }
+        .copy-button:hover {
+            background: var(--text);
+            color: var(--accent);
+            transition: ease-out 0.25s;
         }
     }
 

@@ -58,27 +58,31 @@ async function loadFiles() {
             title.textContent = edit["Role"] || "Editor";
 
             const description = document.createElement("p");
-            description.textContent = edit["Title"] || "Untitled Journal";
+            description.textContent = edit["Title"] || "Failed to load Title";
+
+            const isbn = document.createElement("p");
+            isbn.textContent = edit["ISBN"];
 
             backCard.appendChild(title);
             backCard.appendChild(description);
+            backCard.appendChild(isbn);
 
             innerCard.appendChild(frontCard);
             innerCard.appendChild(backCard);            flipCard.appendChild(innerCard);
             container.appendChild(flipCard);
             
-            // Add the 3D tilt effect listeners
-            flipCard.addEventListener("mousemove", (e) => {
-                const { width, height, left, top } = flipCard.getBoundingClientRect();
-                const x = e.clientX - left;
-                const y = e.clientY - top;
-                const rotateX = ((y / height) - 0.5) * 30;
-                const rotateY = ((x / width) - 0.5) * -30;
-                flipCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            flipCard.addEventListener("mouseleave", () => {
-                flipCard.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            });
+            // // Add the 3D tilt effect listeners
+            // flipCard.addEventListener("mousemove", (e) => {
+            //     const { width, height, left, top } = flipCard.getBoundingClientRect();
+            //     const x = e.clientX - left;
+            //     const y = e.clientY - top;
+            //     const rotateX = ((y / height) - 0.5) * 30;
+            //     const rotateY = ((x / width) - 0.5) * -30;
+            //     flipCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            // });
+            // card.addEventListener("mouseleave", () => {
+            //     flipCard.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            // });
 
             // Render PDF preview if URL exists
             if (edit["URL"]) {

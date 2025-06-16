@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", loadFiles);
 
+function load() {
+
+}
+
 function copy(text) {
   navigator.clipboard.writeText(text).then(() => {
     }).catch(err => {
@@ -33,7 +37,7 @@ async function loadFiles() {
     resPapers.forEach((paper, index) => {
       if (paper["Year"] <= 2010) return;
       const paperDiv = document.createElement("div");
-      paperDiv.className = "paper";
+      paperDiv.className = "paper interactive3dtilt";
 
       // Add title and year first
 
@@ -90,18 +94,23 @@ async function loadFiles() {
       modal.innerHTML = `
         <div class="modal-content">
           <button class="close-modal">X</button>
-          <h2>${paper['Title']}</h2>
-          <table>
-            <tr><th>Journal: </th><td>${paper['Journal Name']}<br>(${paper['ISSN']})</td></tr>
-            <tr><th>Year: </th><td>${paper['Year']}</td></tr>
-            <tr><th>Authors: </th><td>${paper['Author'].split(';').join("<br>")}</td></tr>
-            <tr><th>Volume and Issue: </th><td>${paper["Volume"]}{${paper["Issue"]}}</td></tr>
-            <tr><th>Pages: </th><td>${paper["Page Number"]}</td></tr>
-          </table>
-          <hr>
-          <div class="text-box btn">
-            <button class="copy-button" onclick="copy('${citation}')">Copy</button>
-            <pre><code id="text-snippet">${citation}</pre>
+          <div>
+            <h2>${paper['Title']}</h2>
+            <table>
+              <tr><th>Journal: </th><td>${paper['Journal Name']}<br>(${paper['ISSN']})</td></tr>
+              <tr><th>Year: </th><td>${paper['Year']}</td></tr>
+              <tr><th>Authors: </th><td>${paper['Author'].split(';').join("<br>")}</td></tr>
+              <tr><th>Volume and Issue: </th><td>${paper["Volume"]}{${paper["Issue"]}}</td></tr>
+              <tr><th>Pages: </th><td>${paper["Page Number"]}</td></tr>
+            </table>
+            <hr>
+            <div class="text-box btn">
+              <button class="copy-button" onclick="copy('${citation}')">Copy</button>
+              <pre><code id="text-snippet">${citation}</code></pre>
+            </div>
+          </div>
+          <div>
+            <object data="${paper['Direct Link']}"></object>
           </div>
           <a class="btn" href="${paper["Web Link"]}" target="_blank">View full PDF</a>
         </div>

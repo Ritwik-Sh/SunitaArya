@@ -3,27 +3,36 @@
   :root {
     --text: #0f0b0b;
     --background: #f3e8e8;
-    --primary: #642c2b;
-    --secondary: #d98887;
+    --primary: #9f706f;
+    --secondary: #d87371;
     --accent: #a92a28;
   }
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #f4f0f0;
-    --background: #180d0d;
-    --primary: #d59d9c;
+    --background: #170404;
+    --primary: #cb6d6b;
     --secondary: #772726;
     --accent: #d75654;
   }
 }
 
 
+.interactive3dtilt {
+  transition: transform 0.2s cubic-bezier(0.3, 1, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+}
+
 .flip-card {
   width: 300px;
   height: 400px;
-  perspective: 1000px;
   cursor: pointer;
+  transform-style: preserve-3d;
 }
 
 .flip-card-inner {
