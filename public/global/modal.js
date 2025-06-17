@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    modal.querySelector(".close-modal").addEventListener("click", () => {
+        modal.classList.remove("active");
+    });
+
     // Handle modal dismissal
     document.body.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');

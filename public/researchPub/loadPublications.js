@@ -5,11 +5,29 @@ function load() {
 }
 
 function copy(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    }).catch(err => {
-        console.error(err);
-    }
-  );
+  // Create temporary div with the formatted content
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = text;
+  tempDiv.style.display = `none`;
+  // Create a range and selection
+  const range = document.createRange();
+  const selection = window.getSelection();
+  
+  // Append the div, select its content, and copy
+  document.body.appendChild(tempDiv);
+  range.selectNodeContents(tempDiv);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  
+  try {
+    document.execCommand('copy');
+  } catch (err) {
+    console.error('Failed to copy formatted text:', err);
+  }
+  
+  // Clean up
+  selection.removeAllRanges();
+  document.body.removeChild(tempDiv);
 }
 
 async function loadFiles() {
@@ -80,13 +98,14 @@ async function loadFiles() {
       const yearElement = document.createElement("p");
       yearElement.innerHTML = paper["Year"] || "N/A";
       paperDiv.appendChild(yearElement);
-      
-      const toggleButton = document.createElement("button");
+        const toggleButton = document.createElement("button");
       toggleButton.classList.add('modalTrigger'); 
       toggleButton.innerText = `View More`;
       toggleButton.setAttribute("modalToggle", `#modal-${index}`);
       
-      const citation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. <i>${paper['Journal Name']}</i>. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`
+      // Create two versions of the citation - one for display and one for copying
+      const displayCitation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. <i>${paper['Journal Name']}</i>. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`;
+      const plainCitation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. ${paper['Journal Name']}. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`;
 
       const modal = document.createElement("div");
       modal.id = `modal-${index}`;
@@ -103,10 +122,10 @@ async function loadFiles() {
               <tr><th>Volume and Issue: </th><td>${paper["Volume"]}{${paper["Issue"]}}</td></tr>
               <tr><th>Pages: </th><td>${paper["Page Number"]}</td></tr>
             </table>
-            <hr>
+            <hr>            
             <div class="text-box btn">
-              <button class="copy-button" onclick="copy('${citation}')">Copy</button>
-              <pre><code id="text-snippet">${citation}</code></pre>
+              <button class="copy-button" onclick="copy('${displayCitation}')">Copy</button>
+              <pre><code id="text-snippet">${displayCitation}</code></pre>
             </div>
           </div>
           <div>
@@ -121,13 +140,6 @@ async function loadFiles() {
           span.innerHTML = italic.innerHTML;
           italic.replaceWith(span);
       });
-
-
-      // Add event listener to close modal
-      modal.querySelector(".close-modal").addEventListener("click", () => {
-        modal.classList.remove("active");
-      });
-
 
       paperDiv.appendChild(toggleButton);
       resPaperContainer.appendChild(paperDiv);
