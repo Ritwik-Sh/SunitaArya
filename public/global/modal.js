@@ -4,7 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const trigger = e.target.closest('.modalTrigger');
         if (trigger) {
             toggle(trigger.getAttribute('modalToggle'));
+        } else if (e.target.classList.contains('close-modal')) {
+            const modal = e.target.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
+        console.log(`listening`)
     });
 
     modal.querySelector(".close-modal").addEventListener("click", () => {
@@ -16,16 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = e.target.closest('.modal');
         if (modal && e.target === modal) {
             modal.classList.remove('active');
-        }
-    });
-
-    // Handle close buttons
-    document.body.addEventListener('click', (e) => {
-        if (e.target.classList.contains('close-modal')) {
-            const modal = e.target.closest('.modal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
         }
     });
 });
