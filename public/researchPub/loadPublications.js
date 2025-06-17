@@ -8,7 +8,6 @@ function copy(text) {
   // Create temporary div with the formatted content
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = text;
-  tempDiv.style.display = `none`;
   // Create a range and selection
   const range = document.createRange();
   const selection = window.getSelection();
@@ -129,7 +128,7 @@ async function loadFiles() {
             </div>
           </div>
           <div>
-            <object data="${paper['Direct Link']}"></object>
+            <object type="application/pdf" data="${paper['Direct Link']}"></object>
           </div>
           <a class="btn" href="${paper["Web Link"]}" target="_blank">View full PDF</a>
         </div>
