@@ -9,11 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modal) {
                 modal.classList.remove('active');
             }
+        } else if (e.target.classList.contains('modal')) {
+            const modal = e.target.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
         console.log(`listening`)
     });
 
     modal.querySelector(".close-modal").addEventListener("click", () => {
+        modal.classList.remove("active");
+    });
+    modal.addEventListener("click", () => {
         modal.classList.remove("active");
     });
 

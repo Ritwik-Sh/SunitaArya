@@ -108,7 +108,7 @@ async function loadFiles() {
       const modal = document.createElement("div");
       modal.id = `modal-${index}`;
       modal.classList.add("modal");
-      modal.classList.add("close-modal");
+      // modal.classList.add("close-modal");
       modal.innerHTML = `
         <div class="modal-content">
           <button class="close-modal">X</button>
