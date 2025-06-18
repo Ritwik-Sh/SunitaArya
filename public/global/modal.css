@@ -44,6 +44,8 @@
   .modal-content {
     width: 80vw !important;
     height: 80vh !important;
+    display: flex;
+    align-items: center;
 
     div {
       width: 48%;

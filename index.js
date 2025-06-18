@@ -53,6 +53,15 @@ app.get('/proxy-pdf', (req, res) => {
     });
 });
 
+app.get(`/pdf-proxy`, async (req, res) => {
+  const url = req.query.url;
+  const response = await fetch(url);
+  res.set('Content-Type', 'application/pdf');
+  res.set('Access-Control-Allow-Origin', '*');
+  res.removeHeader('Content-Disposition'); // Important!
+  response.body.pipe(res);
+})
+
 function handlePdfResponse(response, pdfUrl, res) {
     const chunks = [];
     response.on('data', chunk => chunks.push(chunk));

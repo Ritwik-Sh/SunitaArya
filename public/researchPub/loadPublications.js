@@ -128,7 +128,7 @@ async function loadFiles() {
             </div>
           </div>
           <div>
-            <object type="application/pdf" data="${paper['Direct Link']}"></object>
+            <object data="${paper["Direct Link"].trim()}">
           </div>
           <a class="btn" href="${paper["Web Link"]}" target="_blank">View full PDF</a>
         </div>
