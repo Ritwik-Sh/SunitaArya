@@ -3,6 +3,7 @@ const path = require("path");
 const https = require("https");
 const http = require("http");
 const { URL } = require("url");
+const fetch = require("node-fetch");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,14 +54,34 @@ app.get('/proxy-pdf', (req, res) => {
     });
 });
 
-app.get(`/pdf-proxy`, async (req, res) => {
-  const url = req.query.url;
-  const response = await fetch(url);
-  res.set('Content-Type', 'application/pdf');
-  res.set('Access-Control-Allow-Origin', '*');
-  res.removeHeader('Content-Disposition'); // Important!
-  response.body.pipe(res);
-})
+app.get("/pdf", async (req, res) => {
+  const pdfUrl = req.query.url;
+
+  if (!pdfUrl) {
+    return res.status(400).send("Missing ?url= parameter");
+  }
+
+  try {
+    const response = await fetch(pdfUrl);
+    if (!response.ok) {
+      return res.status(500).send("Failed to fetch PDF");
+    }
+
+    const buffer = await response.buffer();
+
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Disposition": 'inline; filename="document.pdf"',
+      "Content-Length": buffer.length,
+      "Cache-Control": "no-store",
+    });
+
+    res.send(buffer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 function handlePdfResponse(response, pdfUrl, res) {
     const chunks = [];

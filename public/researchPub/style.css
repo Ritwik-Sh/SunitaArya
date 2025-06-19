@@ -53,6 +53,8 @@
 } .thumbnail-item.pdf-thumbnail {
     display: none;
     height: 256px !important;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .pdf-loading {
@@ -97,6 +99,8 @@ body {
     scrollbar-color: transparent;
 }
 
+
+
 /* Responsive design */
 @media (max-width: 768px) {
     .paper {
@@ -113,6 +117,9 @@ body {
 .modal {
     text-align: center;
 
+    .smallpdf-widget {
+        margin-left: 3vw;
+    }
     table {
         text-align: left;
         th {
@@ -162,5 +169,12 @@ body {
     }
     .btn:last-of-type {
         text-align: center;
+    }
+}
+
+
+@media (min-wdth: 768px) {
+    a.btn {
+        display: none !important;
     }
 }

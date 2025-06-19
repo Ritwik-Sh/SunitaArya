@@ -55,8 +55,6 @@ async function loadFiles() {
       const paperDiv = document.createElement("div");
       paperDiv.className = "paper interactive3dtilt";
 
-      // Add title and year first
-
       const pdfUrl = paper["Direct Link"]?.trim();
       if (pdfUrl) {
         // Create a container for the PDF thumbnail
@@ -78,7 +76,7 @@ async function loadFiles() {
         thumbnailContainer.appendChild(canvas);
         paperDiv.appendChild(thumbnailContainer);
 
-        // Render PDF thumbnail
+        // Actually render the PDF thumbnail
         renderPDFThumbnail(pdfUrl, canvas, loadingDiv);
       } else {
         // Add placeholder if no PDF URL
@@ -96,7 +94,8 @@ async function loadFiles() {
       const yearElement = document.createElement("p");
       yearElement.innerHTML = paper["Year"] || "N/A";
       paperDiv.appendChild(yearElement);
-        const toggleButton = document.createElement("button");
+      
+      const toggleButton = document.createElement("button");
       toggleButton.classList.add('modalTrigger'); 
       toggleButton.innerText = `View More`;
       toggleButton.setAttribute("modalToggle", `#modal-${index}`);
@@ -108,7 +107,6 @@ async function loadFiles() {
       const modal = document.createElement("div");
       modal.id = `modal-${index}`;
       modal.classList.add("modal");
-      // modal.classList.add("close-modal");
       modal.innerHTML = `
         <div class="modal-content">
           <button class="close-modal">X</button>
@@ -128,16 +126,19 @@ async function loadFiles() {
             </div>
           </div>
           <div>
-            <object data="${paper["Direct Link"].trim()}">
+            <div id="pdf-container-${index}" style="height: 100%; width: 100%" class="smallpdf-widget" data-pdf-url="${pdfUrl}">
+            </div>
           </div>
           <a class="btn" href="${paper["Web Link"]}" target="_blank">View full PDF</a>
         </div>
       `;
+
+      // Fix italic tags
       document.querySelectorAll('i').forEach((italic) => {
-          const span = document.createElement('span');
-          span.style.fontStyle = 'italic';
-          span.innerHTML = italic.innerHTML;
-          italic.replaceWith(span);
+        const span = document.createElement('span');
+        span.style.fontStyle = 'italic';
+        span.innerHTML = italic.innerHTML;
+        italic.replaceWith(span);
       });
 
       paperDiv.appendChild(toggleButton);
@@ -156,68 +157,114 @@ async function loadFiles() {
 
 async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
   try {
-    console.log("📄 Fetching PDF:", pdfUrl);
-    const response = await fetch(`/proxy-pdf?url=${encodeURIComponent(pdfUrl)}`);
-    console.log("Response status:", response.status, response.statusText);
-    console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+    console.log("📄 Starting PDF thumbnail render for:", pdfUrl);
     
+    // Check if PDF.js is loaded
+    if (typeof pdfjsLib === 'undefined') {
+      console.error("PDF.js library not loaded");
+      throw new Error("PDF.js library not loaded - include PDF.js scripts");
+    }
+
+    // Configure PDF.js worker
+    if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    // Fetch the PDF
+    const response = await fetch(`/proxy-pdf?url=${encodeURIComponent(pdfUrl)}`);
     if (!response.ok) {
-      throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const pdfBlob = await response.blob();
-    console.log("Content-Type:", pdfBlob.type);
-
-    // if (pdfBlob.size < 1000) {
-    //   console.log("PDF blob size:", pdfBlob.size, "bytes for URL:", pdfUrl);
-    //   throw new Error(`PDF file too small (${pdfBlob.size} bytes), likely an error response for URL: ${pdfUrl}`);
-
-    // }
+    if (pdfBlob.size < 1000) {
+      throw new Error(`PDF file too small: ${pdfBlob.size} bytes`);
+    }
 
     const pdfData = new Uint8Array(await pdfBlob.arrayBuffer());
     
-    // Ensure PDF.js is loaded
-    if (typeof pdfjsLib === 'undefined') {
-      throw new Error("PDF.js library not loaded");
+    // Validate PDF header
+    const pdfHeader = new TextDecoder().decode(pdfData.slice(0, 4));
+    if (pdfHeader !== '%PDF') {
+      throw new Error("Invalid PDF file format");
     }
 
-    console.log("🔍 Loading PDF document...");
-    const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+    console.log("🔄 Loading PDF document...");
+    
+    // Load PDF document
+    const loadingTask = pdfjsLib.getDocument({ 
+      data: pdfData,
+      cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+      cMapPacked: true
+    });
+    
+    const pdf = await loadingTask.promise;
     const page = await pdf.getPage(1);
 
-    // Set a reasonable scale for thumbnails
-    const scale = 1; // Smaller scale for thumbnails
-    const viewport = page.getViewport({ scale });
+    // Calculate appropriate scale for thumbnail
+    const maxWidth = 200;
+    const maxHeight = 280;
+    const viewport = page.getViewport({ scale: 1.0 });
+    const scale = Math.min(maxWidth / viewport.width, maxHeight / viewport.height);
+    
+    // Apply device pixel ratio for crisp rendering
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    const scaledViewport = page.getViewport({ scale: scale * devicePixelRatio });
+    
+    // Set canvas dimensions
+    canvas.width = scaledViewport.width;
+    canvas.height = scaledViewport.height;
+    canvas.style.width = (scaledViewport.width / devicePixelRatio) + 'px';
+    canvas.style.height = (scaledViewport.height / devicePixelRatio) + 'px';
+    
     const context = canvas.getContext("2d");
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
+    context.scale(devicePixelRatio, devicePixelRatio);
 
-    console.log("🎨 Rendering PDF page...");
+    console.log("🎨 Rendering PDF page to canvas...");
+    
+    // Render the page
     const renderContext = {
       canvasContext: context,
-      viewport: viewport,
+      viewport: page.getViewport({ scale: scale }),
     };
 
     await page.render(renderContext).promise;
     
-    // Hide loading indicator and show canvas
+    // Success - hide loading and show canvas
     loadingDiv.style.display = "none";
     canvas.style.display = "block";
     
     console.log("✅ PDF thumbnail rendered successfully");
+    
+    // Clean up resources
+    page.cleanup();
+    
   } catch (error) {
-    console.error("❌ Error rendering PDF thumbnail for the URL", pdfUrl, " :", error);
+    console.error("❌ PDF thumbnail render failed:", error);
     
-    // Hide loading indicator and show error
+    // Hide loading indicator
     loadingDiv.style.display = "none";
-    canvas.style.display = "none";
     
-    const placeholder = document.createElement("div");
-    placeholder.classList.add("pdf-placeholder");
-    placeholder.classList.add("thumbnail-item");
-    placeholder.textContent = "No PDF available";
+    // Show error placeholder
+    const errorDiv = document.createElement("div");
+    errorDiv.classList.add("pdf-placeholder", "thumbnail-item");
+    errorDiv.textContent = "PDF unavailable";
+    errorDiv.style.cssText = `
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      border: 2px dashed #ddd;
+      min-height: 200px;
+      color: #666;
+      font-size: 14px;
+    `;
     
-    // Replace the canvas with the placeholder in its parent container
-    canvas.parentElement.appendChild(placeholder);
+    // Replace canvas with error placeholder
+    const container = canvas.parentElement;
+    if (container) {
+      canvas.style.display = "none";
+      container.appendChild(errorDiv);
+    }
   }
 }
