@@ -18,9 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`listening`)
     });
 
-    modal.querySelector(".close-modal").addEventListener("click", () => {
-        modal.classList.remove("active");
-    });
+    // Remove the redundant event listener as it's already handled in the click delegation above
     modal.addEventListener("click", () => {
         modal.classList.remove("active");
     });

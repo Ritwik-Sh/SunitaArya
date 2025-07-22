@@ -30,12 +30,17 @@ function copy(text) {
 
 async function loadFiles() {
   try {
+    console.log("Starting to load files...");
     const response = await fetch("/db/Research Publications.xlsx");
+    console.log("Excel file fetched");
     const arrayBuffer = await response.arrayBuffer();
+    console.log("Array buffer loaded");
     const workbook = XLSX.read(arrayBuffer, { type: "array" });
+    console.log("Workbook loaded, sheets:", workbook.SheetNames);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+    console.log("Total papers in Excel:", rawData.length);
     const resPapers = rawData.map((entry) => {
       const clean = {};
       for (const key in entry) {
@@ -43,15 +48,18 @@ async function loadFiles() {
       }
       return clean;
     });
+    console.log("Papers after cleaning:", resPapers.length);
 
     // Sort papers by year in reverse order (newest first)
     resPapers.sort((a, b) => b['Year'] - a['Year']);
+    console.log("First few papers:", resPapers.slice(0, 3));
 
     const resPaperContainer = document.querySelector("#researchPapersContainer");
     resPaperContainer.innerHTML = "";
+    console.log("Starting to render papers to container");
 
     resPapers.forEach((paper, index) => {
-      if (paper["Year"] <= 2010) return;
+      console.log(`Rendering paper ${index + 1}:`, paper.Title);
       const paperDiv = document.createElement("div");
       paperDiv.className = "paper interactive3dtilt";
 
@@ -101,8 +109,17 @@ async function loadFiles() {
       toggleButton.setAttribute("modalToggle", `#modal-${index}`);
       
       // Create two versions of the citation - one for display and one for copying
-      const displayCitation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. <i>${paper['Journal Name']}</i>. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`;
-      const plainCitation = `${paper['Author'].split(';').join(", ")} (${paper['Year']}) ${paper['Title']}. ${paper['Journal Name']}. ${paper['Volume']} (${paper['Issue']}): ${paper['Page Number']}`;
+      const authors = paper['Author'] ? paper['Author'].split(';').join(", ") : "N/A";
+      const year = paper['Year'] || "N/A";
+      const title = paper['Title'] || "N/A";
+      const journal = paper['Journal Name'] || "N/A";
+      const volume = paper['Volume'] || "";
+      const issue = paper['Issue'] || "";
+      const pages = paper['Page Number'] || "";
+      
+      const volumeIssue = volume && issue ? `${volume} (${issue})` : volume || issue;
+      const displayCitation = `${authors} (${year}) ${title}. <i>${journal}</i>. ${volumeIssue}${pages ? ': ' + pages : ''}`;
+      const plainCitation = `${authors} (${year}) ${title}. ${journal}. ${volumeIssue}${pages ? ': ' + pages : ''}`;
 
       const modal = document.createElement("div");
       modal.id = `modal-${index}`;
@@ -111,13 +128,13 @@ async function loadFiles() {
         <div class="modal-content">
           <button class="close-modal">X</button>
           <div>
-            <h2>${paper['Title']}</h2>
+            <h2>${paper['Title'] || 'Untitled'}</h2>
             <table>
-              <tr><th>Journal: </th><td>${paper['Journal Name']}<br>(${paper['ISSN']})</td></tr>
-              <tr><th>Year: </th><td>${paper['Year']}</td></tr>
-              <tr><th>Authors: </th><td>${paper['Author'].split(';').join("<br>")}</td></tr>
-              <tr><th>Volume and Issue: </th><td>${paper["Volume"]}{${paper["Issue"]}}</td></tr>
-              <tr><th>Pages: </th><td>${paper["Page Number"]}</td></tr>
+              <tr><th>Journal: </th><td>${paper['Journal Name'] || 'N/A'}<br>(${paper['ISSN'] || 'N/A'})</td></tr>
+              <tr><th>Year: </th><td>${paper['Year'] || 'N/A'}</td></tr>
+              <tr><th>Authors: </th><td>${paper['Author'] ? paper['Author'].split(';').join("<br>") : 'N/A'}</td></tr>
+              <tr><th>Volume and Issue: </th><td>${paper["Volume"] || ''}${paper["Issue"] ? ` (${paper["Issue"]})` : ''}</td></tr>
+              <tr><th>Pages: </th><td>${paper["Page Number"] || 'N/A'}</td></tr>
             </table>
             <hr>            
             <div class="text-box btn">
