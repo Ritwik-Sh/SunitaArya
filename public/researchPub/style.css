@@ -111,6 +111,10 @@ body {
     #researchPapersContainer {
         padding: 10px;
     }
+
+    iframe {
+        display: none
+    }
 }
 
 

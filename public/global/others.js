@@ -1,7 +1,11 @@
 // Function to add tilt effect to an element
 function addTiltEffect(element) {
   if (!element) return;
-  
+  if (navigator.hardwareConcurrency <= 4) {
+    element.style.MutationObserver = 'none'; // Disable effect on low-end devices
+    element.classList.add('zoom');
+    return;
+  }
   const handleMove = (e) => {
     const { width, height, left, top } = element.getBoundingClientRect();
     const x = e.clientX - left;

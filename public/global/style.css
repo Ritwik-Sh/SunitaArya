@@ -75,3 +75,12 @@
   text-align: center;
   p {color: var(--text)}
 }
+
+.zoom {
+  scale: 1;
+  transition: transform 0.3s ease;
+}
+.zoom:hover {
+  scale: 1.05;
+  transition: transform 0.3s ease;
+}

@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 // PDF cache using Map
 const pdfCache = new Map();
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const CACHE_DURATION = 2 * 24 * 60 * 60 * 1000; // 48 hours in milliseconds
 
 app.use(express.static(path.join(__dirname, "public"))); // Serves static files
 

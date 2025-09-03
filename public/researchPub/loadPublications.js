@@ -143,12 +143,22 @@ async function loadFiles() {
             </div>
           </div>
           <div>
-            <div id="pdf-container-${index}" style="height: 100%; width: 100%" class="smallpdf-widget" data-pdf-url="${pdfUrl}">
+            <div id="pdf-container-${index}" style="height: 100%; width: 100%">
+              <iframe 
+                src="/proxy-pdf?url=${encodeURIComponent(pdfUrl)}" 
+                width="100%" 
+                height="100%" 
+                style="border: none; border-radius: 16px"
+              ></iframe>
+              <!--<div style="height: 100%; width: 100%" class="smallpdf-widget" data-pdf-url="${pdfUrl}"></div>-->
             </div>
           </div>
-          <a class="btn" href="${paper["Web Link"]}" target="_blank">View full PDF</a>
+          <a class="btn" href="${paper["Web Link"]}" target="_blank">View Article</a>
         </div>
       `;
+
+
+
 
       // Fix italic tags
       document.querySelectorAll('i').forEach((italic) => {
@@ -175,17 +185,6 @@ async function loadFiles() {
 async function renderPDFThumbnail(pdfUrl, canvas, loadingDiv) {
   try {
     console.log("📄 Starting PDF thumbnail render for:", pdfUrl);
-    
-    // Check if PDF.js is loaded
-    if (typeof pdfjsLib === 'undefined') {
-      console.error("PDF.js library not loaded");
-      throw new Error("PDF.js library not loaded - include PDF.js scripts");
-    }
-
-    // Configure PDF.js worker
-    if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    }
 
     // Fetch the PDF
     const response = await fetch(`/proxy-pdf?url=${encodeURIComponent(pdfUrl)}`);
