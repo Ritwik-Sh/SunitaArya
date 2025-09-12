@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparative Skeleton Systems</title>
+    <link rel="stylesheet" href="../global/style.css">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .presentation-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .slide {
+        display: none;
+        flex: 1;
+        padding: 40px;
+        background: var(--background);
+        color: var(--text);
+        margin: 20px;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow-y: auto;
+        animation: slideIn 0.5s ease-in-out;
+    }
+
+    .slide.active {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide h1 {
+        color: var(--text);
+        font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 15px;
+    }
+
+    .slide h2 {
+        color: var(--text);
+        font-size: 2em;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--accent);
+        padding-left: 15px;
+    }
+
+    .slide h3 {
+        color: var(--primary);
+        font-size: 1.5em;
+        margin: 15px 0 10px 0;
+    }
+
+    .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    ul {
+        font-size: 1.2em;
+        line-height: 1.8;
+        margin-left: 20px;
+    }
+
+    li {
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    li::before {
+        content: "•";
+        color: var(--primary);
+        font-weight: bold;
+        position: absolute;
+        left: -20px;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 1em;
+    }
+
+    .comparison-table th, .comparison-table td {
+        border: 1px solid var(--secondary);
+        padding: 12px;
+        text-align: left;
+        color: var(--text);
+    }
+
+    .comparison-table th {
+        background-color: var(--primary);
+        color: var(--background);
+        font-weight: bold;
+    }
+
+    .comparison-table tr:nth-child(even) {
+        background-color: var(--secondary);
+        opacity: 0.2;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .control-btn {
+        background: var(--primary);
+        color: var(--background);
+        border: none;
+        padding: 12px 24px;
+        margin: 0 10px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .control-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .control-btn:disabled {
+        background: var(--secondary);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .slide-counter {
+        background: var(--background);
+        color: var(--text);
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin: 0 20px;
+        font-weight: bold;
+    }
+
+    .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .example-card {
+        background: var(--secondary);
+        color: var(--text);
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid var(--accent);
+    }
+
+    .example-card h4 {
+        color: var(--text);
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .highlight-box {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--background);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .definition-box {
+        background: var(--secondary);
+        border: 2px solid var(--primary);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        color: var(--text);
+    }
+
+    .definition-box strong {
+        color: var(--text);
+        font-size: 1.1em;
+    }
+</style>
+
+
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>Comparative Skeleton Systems</h1>
+                <div class="highlight-box">
+                    <h2 style="color: var(--background); border: none; padding: 0; margin: 0;">BSc Zoology</h2>
+                    <p style="font-size: 1.3em; margin-top: 10px;">Understanding Structural Support Across Animal Kingdom</p>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <h3 style="color: var(--primary);">Topics Covered:</h3>
+                    <ul style="display: inline-block; text-align: left; font-size: 1.1em;">
+                        <li>Types of Skeletal Systems</li>
+                        <li>Comparative Analysis</li>
+                        <li>Evolutionary Adaptations</li>
+                        <li>Functional Morphology</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Slide 2: Introduction -->
+    <div class="slide">
+        <h1>Introduction to Skeletal Systems</h1>
+        <div class="slide-content">
+            <div class="definition-box">
+                <strong>Definition:</strong> A skeleton is a structural framework that provides support, protection, and attachment points for muscles in animals.
+            </div>
+            
+            <h2>Functions of Skeletal Systems</h2>
+            <ul>
+                <li><strong>Structural Support:</strong> Maintains body shape and posture</li>
+                <li><strong>Protection:</strong> Shields internal organs from damage</li>
+                <li><strong>Muscle Attachment:</strong> Provides leverage points for movement</li>
+                <li><strong>Mineral Storage:</strong> Repository for calcium and phosphate</li>
+                <li><strong>Hematopoiesis:</strong> Blood cell production (in vertebrates)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Key Concept:</strong> Skeletal systems reflect evolutionary adaptations to different environments and lifestyles
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Types of Skeletal Systems -->
+    <div class="slide">
+        <h1>Three Main Types of Skeletal Systems</h1>
+        <div class="slide-content">
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>1. Hydrostatic Skeleton</h4>
+                    <p><strong>Mechanism:</strong> Fluid-filled cavity provides support through internal pressure</p>
+                    <p><strong>Examples:</strong> Earthworms, jellyfish, squid tentacles</p>
+                </div>
+                
+                <div class="example-card">
+                    <h4>2. Exoskeleton</h4>
+                    <p><strong>Mechanism:</strong> External skeletal structure encases the body</p>
+                    <p><strong>Examples:</strong> Insects, crustaceans, mollusk shells</p>
+                </div>
+                
+                <div class="example-card">
+                    <h4>3. Endoskeleton</h4>
+                    <p><strong>Mechanism:</strong> Internal skeletal framework within body tissues</p>
+                    <p><strong>Examples:</strong> Vertebrates, echinoderms</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>Evolution Trend:</strong> Hydrostatic → Exoskeleton → Endoskeleton represents increasing capacity for large body size
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Hydrostatic Skeleton -->
+    <div class="slide">
+        <h1>Hydrostatic Skeleton</h1>
+        <div class="slide-content">
+            <div class="definition-box">
+                <strong>Mechanism:</strong> Muscles contract against incompressible fluid, creating movement and maintaining shape
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3>Examples & Mechanisms:</h3>
+                    <ul>
+                        <li><strong>Earthworms:</strong> Coelomic fluid provides turgor pressure</li>
+                        <li><strong>Jellyfish:</strong> Mesoglea acts as hydrostatic medium</li>
+                        <li><strong>Squid tentacles:</strong> Muscular hydrostatic system</li>
+                        <li><strong>Sea anemones:</strong> Water-filled gastrovascular cavity</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Advantages:</h3>
+                    <ul>
+                        <li>Flexible and allows complex movements</li>
+                        <li>Lightweight structure</li>
+                        <li>Self-repairing capability</li>
+                        <li>Efficient for burrowing and swimming</li>
+                    </ul>
+                    
+                    <h3 style="color: var(--accent);">Disadvantages:</h3>
+                    <ul>
+                        <li>Limited size due to pressure constraints</li>
+                        <li>Vulnerable to puncture damage</li>
+                        <li>Cannot provide rigid support for large mass</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Exoskeleton -->
+    <div class="slide">
+        <h1>Exoskeleton</h1>
+        <div class="slide-content">
+            <h2>Composition & Examples</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Arthropods</h4>
+                    <p><strong>Material:</strong> Chitin reinforced with proteins or calcium carbonate</p>
+                    <p><strong>Examples:</strong> Insects, crustaceans, arachnids</p>
+                </div>
+                <div class="example-card">
+                    <h4>Mollusks</h4>
+                    <p><strong>Material:</strong> Calcium carbonate with organic matrix</p>
+                    <p><strong>Examples:</strong> Snail shells, clam shells</p>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Advantages</th>
+                    <th>Disadvantages</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul style="margin: 0;">
+                            <li>Excellent protection</li>
+                            <li>Waterproofing capability</li>
+                            <li>Precise muscle attachment</li>
+                            <li>Sensory integration</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul style="margin: 0;">
+                            <li>Requires molting for growth</li>
+                            <li>Heavy and energy-expensive</li>
+                            <li>Limits flexibility</li>
+                            <li>Vulnerable during molting</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Molting Process:</strong> Controlled by ecdysone hormone → old exoskeleton softens → animal emerges → new skeleton hardens
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Endoskeleton -->
+    <div class="slide">
+        <h1>Endoskeleton</h1>
+        <div class="slide-content">
+            <h2>Two Main Types:</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 20px 0;">
+                <div class="example-card">
+                    <h4>Cartilaginous Endoskeleton</h4>
+                    <p><strong>Composition:</strong> Cartilage (chondroitin sulfate + collagen)</p>
+                    <p><strong>Examples:</strong> Sharks, rays, skates</p>
+                    <p><strong>Properties:</strong> Flexible, lighter than bone, grows continuously</p>
+                </div>
+                
+                <div class="example-card">
+                    <h4>Bony Endoskeleton</h4>
+                    <p><strong>Composition:</strong> Calcium phosphate + collagen</p>
+                    <p><strong>Examples:</strong> Most vertebrates</p>
+                    <p><strong>Types:</strong> Compact bone (dense) + Spongy bone (trabecular)</p>
+                </div>
+            </div>
+
+            <h3>Advantages of Endoskeleton:</h3>
+            <ul>
+                <li>Grows continuously with the animal</li>
+                <li>Allows large body size</li>
+                <li>Provides framework for complex organ systems</li>
+                <li>Enables sophisticated locomotion</li>
+                <li>Self-repairing through remodeling</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Key Advantage:</strong> Continuous growth without molting allows for larger, more complex organisms
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Phylum-wise Comparison -->
+    <div class="slide">
+        <h1>Comparative Analysis by Phylum</h1>
+        <div class="slide-content">
+            <table class="comparison-table">
+                <tr>
+                    <th>Phylum</th>
+                    <th>Skeleton Type</th>
+                    <th>Key Features</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td>Cnidaria</td>
+                    <td>Hydrostatic</td>
+                    <td>Mesoglea support, radial symmetry</td>
+                    <td>Jellyfish, corals, anemones</td>
+                </tr>
+                <tr>
+                    <td>Annelida</td>
+                    <td>Hydrostatic</td>
+                    <td>Segmented coelom, peristaltic movement</td>
+                    <td>Earthworms, polychaetes</td>
+                </tr>
+                <tr>
+                    <td>Arthropoda</td>
+                    <td>Exoskeleton</td>
+                    <td>Chitin, jointed appendages, molting</td>
+                    <td>Insects, crustaceans, spiders</td>
+                </tr>
+                <tr>
+                    <td>Mollusca</td>
+                    <td>Exoskeleton (shell)</td>
+                    <td>Calcium carbonate, mantle secretion</td>
+                    <td>Snails, clams (not cephalopods)</td>
+                </tr>
+                <tr>
+                    <td>Echinodermata</td>
+                    <td>Endoskeleton</td>
+                    <td>Calcareous ossicles, pentaradial symmetry</td>
+                    <td>Sea stars, sea urchins</td>
+                </tr>
+                <tr>
+                    <td>Chordata</td>
+                    <td>Endoskeleton</td>
+                    <td>Vertebral column, appendicular skeleton</td>
+                    <td>Fish, amphibians, reptiles, birds, mammals</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Slide 8: Evolutionary Trends -->
+    <div class="slide">
+        <h1>Evolutionary Trends & Adaptations</h1>
+        <div class="slide-content">
+            <h2>Size and Complexity Relationship</h2>
+            <div class="highlight-box">
+                <strong>Evolutionary Progression:</strong><br>
+                Hydrostatic → Exoskeleton → Endoskeleton<br>
+                <em>Represents increasing capacity for large body size and complexity</em>
+            </div>
+
+            <h2>Environmental Adaptations</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Aquatic Environments</h4>
+                    <p>Buoyancy reduces skeletal load</p>
+                    <p>Examples: Cartilaginous fish, marine mammals with dense bones</p>
+                </div>
+                <div class="example-card">
+                    <h4>Terrestrial Environments</h4>
+                    <p>Gravity necessitates stronger support</p>
+                    <p>Examples: Robust limb bones in large mammals</p>
+                </div>
+                <div class="example-card">
+                    <h4>Aerial Environments</h4>
+                    <p>Weight reduction is paramount</p>
+                    <p>Examples: Pneumatic bones in birds, hollow structures</p>
+                </div>
+            </div>
+
+            <h3>Metabolic Considerations:</h3>
+            <ul>
+                <li><strong>Exoskeletons:</strong> High initial cost, periodic replacement needed</li>
+                <li><strong>Endoskeletons:</strong> Continuous maintenance but continuous growth</li>
+                <li><strong>Hydrostatic:</strong> Lowest metabolic cost but size limitations</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 9: Functional Morphology -->
+    <div class="slide">
+        <h1>Functional Morphology & Biomechanics</h1>
+        <div class="slide-content">
+            <h2>Mechanical Properties</h2>
+            <ul>
+                <li><strong>Young's Modulus:</strong> Stiffness comparison - Bone > Chitin > Cartilage</li>
+                <li><strong>Stress-Strain Relationships:</strong> How materials respond to force</li>
+                <li><strong>Fracture Mechanics:</strong> Damage resistance varies by skeletal type</li>
+            </ul>
+
+            <h2>Biomechanical Principles</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Lever Systems</h4>
+                    <p>First, second, and third-class levers in different skeletal arrangements</p>
+                    <p>Optimize force vs. speed trade-offs</p>
+                </div>
+                <div class="example-card">
+                    <h4>Structural Efficiency</h4>
+                    <p>Hollow bones in birds reduce weight</p>
+                    <p>Trabecular architecture optimizes strength-to-weight ratio</p>
+                </div>
+                <div class="example-card">
+                    <h4>Safety Factors</h4>
+                    <p>Over-engineering in skeletal systems</p>
+                    <p>Ensures survival under extreme conditions</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Engineering Inspiration:</strong> Natural skeletal designs inspire biomimetic materials and structures in modern technology
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Development and Growth -->
+    <div class="slide">
+        <h1>Development & Growth Patterns</h1>
+        <div class="slide-content">
+            <h2>Ontogenetic Changes</h2>
+            <ul>
+                <li><strong>Metamorphosis:</strong> Dramatic skeletal reorganization in insects and amphibians</li>
+                <li><strong>Allometric Growth:</strong> Disproportionate growth of different skeletal elements</li>
+                <li><strong>Bone Remodeling:</strong> Continuous reconstruction in response to mechanical stress</li>
+            </ul>
+
+            <h2>Hormonal Control Systems</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Growth Hormone (Vertebrates)</h4>
+                    <p>Regulates skeletal growth and development</p>
+                    <p>Controls longitudinal bone growth</p>
+                </div>
+                <div class="example-card">
+                    <h4>Thyroid Hormones</h4>
+                    <p>Control metamorphic changes in amphibians</p>
+                    <p>Trigger skeletal remodeling during development</p>
+                </div>
+                <div class="example-card">
+                    <h4>Ecdysone (Arthropods)</h4>
+                    <p>Controls molting cycles</p>
+                    <p>Regulates exoskeleton replacement</p>
+                </div>
+            </div>
+
+            <div class="definition-box">
+                <strong>Key Concept:</strong> Different skeletal systems require different growth strategies - continuous growth (endoskeleton) vs. periodic replacement (exoskeleton) vs. expansion (hydrostatic)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Clinical Applications -->
+    <div class="slide">
+        <h1>Clinical & Applied Aspects</h1>
+        <div class="slide-content">
+            <h2>Common Pathologies</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Osteoporosis</h4>
+                    <p>Bone density loss in aging mammals</p>
+                    <p>Related to hormonal changes and mechanical stress</p>
+                </div>
+                <div class="example-card">
+                    <h4>Arthritis</h4>
+                    <p>Joint degeneration across vertebrates</p>
+                    <p>Affects mobility and quality of life</p>
+                </div>
+                <div class="example-card">
+                    <h4>Shell Deformities</h4>
+                    <p>Environmental impacts on mollusk development</p>
+                    <p>Pollution effects on calcium carbonate deposition</p>
+                </div>
+            </div>
+
+            <h2>Biomimetic Applications</h2>
+            <ul>
+                <li><strong>Materials Science:</strong> Composite materials inspired by bone structure</li>
+                <li><strong>Robotics:</strong> Exoskeleton designs for human augmentation</li>
+                <li><strong>Architecture:</strong> Structural designs based on natural skeletal systems</li>
+                <li><strong>Medical Implants:</strong> Bone substitute materials mimicking natural properties</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Future Applications:</strong> Understanding natural skeletal systems drives innovation in medicine, engineering, and materials science
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Summary -->
+    <div class="slide">
+        <h1>Summary & Key Takeaways</h1>
+        <div class="slide-content">
+            <h2>Major Points to Remember:</h2>
+            <ul style="font-size: 1.1em;">
+                <li><strong>Three main types:</strong> Hydrostatic, Exoskeleton, and Endoskeleton each with unique advantages</li>
+                <li><strong>Size limitations:</strong> Skeletal type determines maximum achievable body size</li>
+                <li><strong>Environmental adaptation:</strong> Skeletal systems reflect evolutionary responses to habitat demands</li>
+                <li><strong>Growth strategies:</strong> Different systems require different approaches to development</li>
+                <li><strong>Biomechanical optimization:</strong> Natural selection optimizes skeletal design for function</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3 style="color: var(--background); border: none; margin: 0;">Comparative Approach is Essential</h3>
+                <p>Understanding skeletal diversity helps explain:</p>
+                <ul style="color: var(--background); text-align: left; display: inline-block;">
+                    <li>Evolutionary relationships</li>
+                    <li>Functional constraints</li>
+                    <li>Ecological adaptations</li>
+                    <li>Developmental mechanisms</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <h3>Study Tips:</h3>
+                <p style="font-size: 1.1em;">Focus on structure-function relationships and evolutionary trade-offs between different skeletal systems</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+        </span>
+        <button class="control-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+    </div>
+</div>
+
+<script>
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    document.getElementById('totalSlides').textContent = totalSlides;
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        
+        document.getElementById('currentSlide').textContent = index + 1;
+        document.getElementById('prevBtn').disabled = index === 0;
+        document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+    }
+
+    function changeSlide(direction) {
+        const newIndex = currentSlideIndex + direction;
+        if (newIndex >= 0 && newIndex < totalSlides) {
+            currentSlideIndex = newIndex;
+            showSlide(currentSlideIndex);
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        if (e.key === 'ArrowRight') changeSlide(1);
+    });
+
+    // Initialize
+    showSlide(0);
+</script>
+</body>
+</html>
