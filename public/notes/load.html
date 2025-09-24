@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes | Sunita Arya</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://kit.fontawesome.com/d63d2ac69c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../global/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            flex: 1;
+            padding: 20px;
+            /* background: var(--background); */
+            color: var(--text);
+            margin: 20px;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.5s ease-in-out;
+            transform: translateX(100%);
+            align-items: center;
+            justify-content: center;
+            width: 95%;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 10px;
+                margin: 10px;
+            }
+        }
+
+        .slide.active {
+            transform: translateX(0);
+            display: flex;
+        }
+
+        .slide.prev {
+            transform: translateX(-110%) !important;
+        }
+
+        .slides-container {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .pdf-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn {
+            background: var(--primary);
+            color: var(--background);
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn:disabled {
+            background: var(--secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        .slide-counter {
+            background: var(--background);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 20px;
+            font-weight: bold;
+        }
+
+        #fullscreenBtn {
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 15px;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: var(--text);
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
+        .error-message {
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.1em;
+            padding: 40px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .file-input-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            background: var(--primary);
+            color: var(--background);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .file-input-label:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .zoom-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="slides-container" id="slidesContainer">
+            <div class="slide active">
+                <div class="file-input-container">
+                    <h1 style="color: var(--primary); margin-bottom: 30px;">Notes</h1>
+                    <div class="loading-message" id="loadingMessage">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn fa-solid fa-print" id="printBtn" title="Print PDF" disabled></button>
+            <button class="control-btn fa-solid fa-arrow-left" id="prevBtn" disabled></button>
+            <span class="slide-counter">
+                <span id="currentSlide">0</span> / <span id="totalSlides">0</span>
+            </span>
+            <button class="control-btn fa-solid fa-arrow-right" id="nextBtn" disabled></button>
+            <button class="control-btn fa-solid fa-expand" id="fullscreenBtn" title="Toggle fullscreen"></button>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the page to fully load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set PDF.js worker
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                initializePDFViewer();
+            } else {
+                console.error('PDF.js library not loaded');
+                document.getElementById('loadingMessage').innerHTML = `
+                    <div class="error-message">
+                        <i class="fa-solid fa-exclamation-triangle"></i>
+                        <p>PDF.js library failed to load. Please check your internet connection.</p>
+                    </div>
+                `;
+            }
+        });
+
+        let pdfDocument = null;
+        let currentPageIndex = 0;
+        let totalPages = 0;
+        let currentScale = 1.0;
+        let slides = [];
+
+        // DOM elements
+        const slidesContainer = document.getElementById('slidesContainer');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const currentSlideSpan = document.getElementById('currentSlide');
+        const totalSlidesSpan = document.getElementById('totalSlides');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const printBtn = document.getElementById('printBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const pdfFileInput = document.getElementById('pdfFile');
+
+        function initializePDFViewer() {
+            // Try to load default PDF first
+            const urlParams = new URLSearchParams(window.location.search);
+            if (!urlParams.has('doc')) {
+                window.location.href = window.location.origin;
+            }
+            loadPDF(urlParams.get('doc'));
+
+            // Set up event listeners
+            prevBtn.addEventListener('click', () => changeSlide(-1));
+            nextBtn.addEventListener('click', () => changeSlide(1));
+            printBtn.addEventListener('click', () => {
+                if (pdfDocument) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = fileUrl;
+                    document.body.appendChild(iframe);
+
+                    iframe.onload = function() {
+                        setTimeout(() => {
+                            iframe.contentWindow.focus();
+                            iframe.contentWindow.print();
+                        }, 1);
+                    }
+                    iframe.onafterprint = function() {
+                        document.body.removeChild(iframe);
+                    }
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+                if (e.key === 'ArrowRight') changeSlide(1);
+            });
+
+            // Fullscreen functionality
+            setupFullscreen();
+            
+            // Touch and wheel navigation
+            setupTouchAndWheelNavigation();
+        }
+        let fileUrl = "";
+        async function loadPDF(url) {
+            try {
+                loadingMessage.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+                fileUrl = url;
+                const loadingTask = pdfjsLib.getDocument(url);
+                pdfDocument = await loadingTask.promise;
+                totalPages = pdfDocument.numPages;
+                
+                await renderAllPages();
+                
+                totalSlidesSpan.textContent = totalPages;
+                currentSlideSpan.textContent = '1';
+                currentPageIndex = 0;
+                
+                // Enable controls
+                nextBtn.disabled = totalPages <= 1;
+                printBtn.disabled = false;
+                
+                showSlide(0);
+                
+            } catch (error) {
+                console.error('Error loading PDF:', error);
+                if (url === 'presentation.pdf') {
+                    // Silently fail for default PDF, show file input
+                    return;
+                }
+                loadingMessage.innerHTML = `
+                    <div class="error-message">
+                        <i class="fa-solid fa-exclamation-triangle"></i>
+                        <p>Error loading PDF: ${error.message}</p>
+                        <label for="pdfFile" class="file-input-label">
+                            <i class="fa-solid fa-file-pdf"></i> Try Another File
+                        </label>
+                    </div>
+                `;
+            }
+        }
+
+        async function renderAllPages() {
+            // Clear existing slides except the first one
+            const existingSlides = slidesContainer.querySelectorAll('.slide:not(:first-child)');
+            existingSlides.forEach(slide => slide.remove());
+            slides = [];
+
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                const page = await pdfDocument.getPage(pageNum);
+                const slideElement = createSlideElement(page, pageNum - 1);
+                slides.push(slideElement);
+                slidesContainer.appendChild(slideElement);
+            }
+        }
+
+        function createSlideElement(page, index) {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            
+            const canvas = document.createElement('canvas');
+            canvas.className = 'pdf-canvas';
+            slide.appendChild(canvas);
+            
+            renderPageToCanvas(page, canvas);
+            
+            return slide;
+        }
+
+        function renderPageToCanvas(page, canvas) {
+            const context = canvas.getContext('2d');
+            
+            // Calculate scale to fit the slide container
+            const slideContainer = slidesContainer;
+            const containerWidth = slideContainer.clientWidth;
+            const containerHeight = slideContainer.clientHeight;
+            
+            const viewport = page.getViewport({ scale: 0.5 });
+            const scaleX = containerWidth / viewport.width;
+            const scaleY = containerHeight / viewport.height;
+            const scale = Math.min(scaleX, scaleY) * currentScale;
+            
+            const scaledViewport = page.getViewport({ scale: scale });
+            
+            canvas.width = scaledViewport.width;
+            canvas.height = scaledViewport.height;
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: scaledViewport
+            };
+            
+            page.render(renderContext);
+        }
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev');
+                slide.style.transform = 'translateX(110%)';
+            });
+
+            // Set previous slides
+            for (let i = 0; i < index; i++) {
+                if (slides[i]) {
+                    slides[i].classList.add('prev');
+                }
+            }
+
+            // Show active slide
+            if (slides[index]) {
+                slides[index].classList.add('active');
+                slides[index].style.transform = 'translateX(0)';
+            }
+
+            // Hide the initial slide if PDF is loaded
+            if (totalPages > 0) {
+                const initialSlide = slidesContainer.querySelector('.slide:first-child');
+                initialSlide.style.display = 'none';
+            }
+
+            // Update UI
+            currentSlideSpan.textContent = index + 1;
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalPages - 1;
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentPageIndex + direction;
+            if (newIndex >= 0 && newIndex < totalPages) {
+                currentPageIndex = newIndex;
+                showSlide(currentPageIndex);
+            }
+        }
+
+        async function rerenderCurrentSlide() {
+            if (currentPageIndex >= 0 && currentPageIndex < slides.length) {
+                const page = await pdfDocument.getPage(currentPageIndex + 1);
+                const canvas = slides[currentPageIndex].querySelector('.pdf-canvas');
+                renderPageToCanvas(page, canvas);
+            }
+        }
+
+
+        function setupFullscreen() {
+            const presentationContainer = document.querySelector('.presentation-container');
+
+            function isFullscreen() {
+                return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement;
+            }
+
+            function updateFsButton() {
+                if (isFullscreen()) {
+                    fullscreenBtn.classList.add('fa-compress');
+                    fullscreenBtn.classList.remove('fa-expand');
+                    slides.forEach(slide => { slide.style.margin = '0'; slide.style.width = '100%'; });
+                } else {
+                    fullscreenBtn.classList.add('fa-expand');
+                    fullscreenBtn.classList.remove('fa-compress');
+                    slides.forEach(slide => { slide.style.margin = '20px'; slide.style.width = '95%'; });
+                }
+            }
+
+            fullscreenBtn.addEventListener('click', () => {
+                if (!isFullscreen()) {
+                    if (presentationContainer.requestFullscreen) {
+                        presentationContainer.requestFullscreen();
+                    } else if (presentationContainer.webkitRequestFullscreen) {
+                        presentationContainer.webkitRequestFullscreen();
+                    } else if (presentationContainer.msRequestFullscreen) {
+                        presentationContainer.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+
+            // Update button on change (cross-browser)
+            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+                document.addEventListener(evt, updateFsButton);
+            });
+
+            updateFsButton();
+        }
+
+        // function setupTouchAndWheelNavigation() {
+        //     let wheelCooldown = false;
+        //     const WHEEL_COOLDOWN_MS = 200;
+
+        //     function onWheel(e) {
+        //         const deltaX = e.deltaX;
+        //         if (Math.abs(deltaX) < 10) return;
+
+        //         if (wheelCooldown) return;
+        //         wheelCooldown = true;
+        //         setTimeout(() => wheelCooldown = false, WHEEL_COOLDOWN_MS);
+
+        //         if (deltaX > 0) {
+        //             changeSlide(1);
+        //         } else if (deltaX < 0) {
+        //             changeSlide(-1);
+        //         }
+        //     }
+
+        //     // Touch swipe support
+        //     let touchStartX = null;
+        //     let touchLocked = false;
+        //     const TOUCH_THRESHOLD = 40;
+        //     const TOUCH_LOCK_MS = 250;
+
+        //     function onTouchStart(e) {
+        //         if (!e.touches || e.touches.length === 0) return;
+        //         touchStartX = e.touches[0].clientX;
+        //         touchLocked = false;
+        //     }
+
+        //     function onTouchMove(e) {
+        //         if (!touchStartX || !e.touches || e.touches.length === 0) return;
+        //         const dx = e.touches[0].clientX - touchStartX;
+
+        //         if (Math.abs(dx) > 10) {
+        //             e.preventDefault();
+        //         }
+        //     }
+
+        //     function onTouchEnd(e) {
+        //         if (touchLocked || touchStartX === null) return;
+
+        //         const touch = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0]);
+        //         if (!touch) {
+        //             touchStartX = null;
+        //             return;
+        //         }
+
+        //         const dx = touch.clientX - touchStartX;
+
+        //         if (Math.abs(dx) > TOUCH_THRESHOLD) {
+        //             touchLocked = true;
+        //             setTimeout(() => touchLocked = false, TOUCH_LOCK_MS);
+        //             if (dx < 0) {
+        //                 changeSlide(1);
+        //             } else {
+        //                 changeSlide(-1);
+        //             }
+        //         }
+
+        //         touchStartX = null;
+        //     }
+
+        //     window.addEventListener('wheel', onWheel, { passive: true });
+        //     window.addEventListener('touchstart', onTouchStart, { passive: true });
+        //     window.addEventListener('touchmove', onTouchMove, { passive: false });
+        //     window.addEventListener('touchend', onTouchEnd, { passive: true });
+        // }
+    </script>
+</body>
+
+</html>

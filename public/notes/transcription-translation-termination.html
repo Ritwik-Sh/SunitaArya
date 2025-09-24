@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcription, Translation, and Termination</title>
+    <link rel="shortcut icon" href="../db/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../global/style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d63d2ac69c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="slides-container">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active">
+                <div class="slide-content">
+                    <h1>Transcription, Translation, and Termination</h1>
+                    <div class="highlight-box">
+                        <h2 style="border: none">Molecular Biology</h2>
+                        <p style="font-size: 1.3em; margin-top: 10px;">From DNA to Proteins: The Central Dogma</p>
+                    </div>
+                    <div style="text-align: center; margin-top: 40px;">
+                        <h3 style="color: var(--primary);">Topics Covered:</h3>
+                        <ul style="display: inline-block; text-align: left; font-size: 1.1em;">
+                            <li>Transcription Process</li>
+                            <li>RNA Polymerase Function</li>
+                            <li>Promoters and Initiation</li>
+                            <li>Elongation Mechanisms</li>
+                            <li>Termination Strategies</li>
+                        </ul>
+                    </div>
+                    <h2 style="border: none; text-align: center; margin-top: 2rem; color: var(--primary)">Prof. Sunita Arya</h2>
+                </div>
+            </div>
+
+            <!-- Slide 2: Introduction -->
+            <div class="slide">
+                <h1>Introduction to Transcription</h1>
+                <div class="slide-content">
+                    <div class="definition-box">
+                        <strong>Definition:</strong> Transcription is the process in which a gene's DNA sequence is copied (transcribed) to make an RNA molecule.
+                    </div>
+
+                    <h2>Why is Transcription Essential?</h2>
+                    <div class="example-card">
+                        <h4>Death Cap Mushroom Example</h4>
+                        <p>These lethal mushrooms produce a toxin that attaches to <strong>RNA polymerase</strong>, blocking transcription and causing liver failure because no new RNAs—and thus no new proteins—can be made.</p>
+                    </div>
+
+                    <h3>The Central Role of RNA Polymerase:</h3>
+                    <ul>
+                        <li>Main enzyme responsible for transcription</li>
+                        <li>Copies DNA into RNA (ribonucleic acid)</li>
+                        <li>Essential for gene expression</li>
+                        <li>Required for protein synthesis</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Key Point:</strong> Transcription is the first step of gene expression, converting DNA information into RNA that can be used to make proteins.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Transcription Overview -->
+            <div class="slide">
+                <h1>Transcription Overview</h1>
+                <div class="slide-content">
+                    <h2>Basic Process</h2>
+                    <ul>
+                        <li><strong>DNA Double Helix Unwinding:</strong> Creates a transcription bubble near the target gene</li>
+                        <li><strong>Template Strand Usage:</strong> One DNA strand serves as the template</li>
+                        <li><strong>RNA Synthesis:</strong> Complementary RNA molecule is created</li>
+                    </ul>
+
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Template Strand</h4>
+                            <p><strong>Function:</strong> Serves as the template for RNA synthesis</p>
+                            <p><strong>Direction:</strong> Read 3' to 5'</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Coding Strand (Non-template)</h4>
+                            <p><strong>Function:</strong> Nearly identical to RNA transcript</p>
+                            <p><strong>Key Difference:</strong> Contains T instead of U</p>
+                        </div>
+                    </div>
+
+                    <h3>Important Terminology:</h3>
+                    <ul>
+                        <li><strong>+1 Site:</strong> Initiation site where transcription begins</li>
+                        <li><strong>Upstream:</strong> Sequences before initiation site (negative numbers)</li>
+                        <li><strong>Downstream:</strong> Sequences after initiation site (positive numbers)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 4: RNA Polymerase -->
+            <div class="slide">
+                <h1>RNA Polymerase</h1>
+                <div class="slide-content">
+                    <div class="definition-box">
+                        <strong>Function:</strong> RNA polymerases are enzymes that transcribe DNA into RNA using base pairing rules.
+                    </div>
+
+                    <h2>Key Characteristics:</h2>
+                    <ul>
+                        <li><strong>Direction:</strong> Always synthesizes RNA in 5' to 3' direction</li>
+                        <li><strong>Template Reading:</strong> Reads DNA template 3' to 5'</li>
+                        <li><strong>Base Pairing:</strong> G pairs with C, A pairs with U (not T in RNA)</li>
+                        <li><strong>Structure:</strong> Large, multi-subunit enzymes</li>
+                    </ul>
+
+                    <h2>Types in Different Organisms:</h2>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Bacteria</h4>
+                            <p>Single RNA polymerase handles all transcription</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Eukaryotes (Humans)</h4>
+                            <p><strong>RNA Pol I:</strong> rRNA genes</p>
+                            <p><strong>RNA Pol II:</strong> mRNA and most genes</p>
+                            <p><strong>RNA Pol III:</strong> tRNA and 5S rRNA</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Plants</h4>
+                            <p>Additional RNA Pol IV and V for small RNA synthesis</p>
+                        </div>
+                    </div>
+                    <img src="https://cdn.kastatic.org/ka-perseus-images/52fccc3445d2b2b03aafc15d24978278dc862a98.png">
+                </div>
+            </div>
+
+            <!-- Slide 5: Transcription Initiation -->
+            <div class="slide">
+                <h1>Transcription Initiation</h1>
+                <div class="slide-content">
+                    <div class="definition-box">
+                        <strong>Promoter:</strong> A DNA region that tells RNA polymerase where to "sit down" and begin transcribing.
+                    </div>
+
+                    <h2>Bacterial Promoters</h2>
+                    <div class="example-card">
+                        <h4>Key Elements</h4>
+                        <p><strong>-35 Element:</strong> Located ~35 nucleotides upstream of +1 site</p>
+                        <p><strong>-10 Element:</strong> Located ~10 nucleotides upstream of +1 site</p>
+                        <p><strong>Function:</strong> Direct RNA polymerase binding and positioning</p>
+                    </div>
+
+                    <h3>DNA Opening Process:</h3>
+                    <ul>
+                        <li>Occurs at the -10 element</li>
+                        <li>Rich in A-T base pairs (weaker bonding)</li>
+                        <li>Easier strand separation due to fewer hydrogen bonds</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Bacterial Strategy:</strong> RNA polymerase binds directly to promoter sequences without helper proteins.
+                    </div>
+                    <img src="https://cdn.kastatic.org/ka-perseus-images/a1541486673e01a5ce609108061d3a205d0897ca.png">
+                </div>
+            </div>
+
+            <!-- Slide 6: Eukaryotic Initiation -->
+            <div class="slide">
+                <h1>Eukaryotic Transcription Initiation</h1>
+                <div class="slide-content">
+                    <h2>Key Differences from Bacteria:</h2>
+                    <ul>
+                        <li>RNA polymerase does NOT bind directly to promoters</li>
+                        <li>Requires helper proteins called <strong>general transcription factors</strong></li>
+                        <li>More complex initiation process</li>
+                    </ul>
+
+                    <div class="example-card">
+                        <h4>TATA Box</h4>
+                        <p><strong>Sequence:</strong> TATAAA (similar to bacterial -10 element)</p>
+                        <p><strong>Function:</strong> Recognized by general transcription factors</p>
+                        <p><strong>Composition:</strong> Rich in A-T pairs for easy strand separation</p>
+                    </div>
+
+                    <h2>Initiation Steps:</h2>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Step 1</h4>
+                            <p>General transcription factor binds to TATA box</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Step 2</h4>
+                            <p>Additional transcription factors assemble</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Step 3</h4>
+                            <p>RNA polymerase II recruited to promoter complex</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Complexity Advantage:</strong> Multiple control points allow for sophisticated gene regulation in eukaryotes.
+                    </div>
+                    <img src="https://cdn.kastatic.org/ka-perseus-images/d8f337cfb9d80ad3576e26877c766626ede50b1d.png">
+                </div>
+            </div>
+
+            <!-- Slide 7: Elongation -->
+            <div class="slide">
+                <h1>Transcription Elongation</h1>
+                <div class="slide-content">
+                    <div class="definition-box">
+                        <strong>Elongation:</strong> The stage when the RNA strand gets longer through addition of nucleotides.
+                    </div>
+
+                    <h2>Elongation Process:</h2>
+                    <ul>
+                        <li>RNA polymerase "walks" along template strand (3' to 5' direction)</li>
+                        <li>Adds complementary nucleotides to growing RNA (5' to 3')</li>
+                        <li>DNA double helix opens ahead, closes behind</li>
+                        <li>RNA transcript temporarily binds to template, then releases</li>
+                    </ul>
+
+                    <h2>Multiple Polymerases:</h2>
+                    <div class="example-card">
+                        <h4>Simultaneous Transcription</h4>
+                        <p>Many RNA polymerases can transcribe the same gene simultaneously</p>
+                        <p><strong>Result:</strong> Creates a "Christmas tree" pattern with RNA tails of increasing length</p>
+                        <p><strong>Advantage:</strong> Increases efficiency of RNA production</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Key Reminder:</strong> RNA contains uracil (U) instead of thymine (T), so the coding strand sequence differs from RNA only in T/U substitution.
+                    </div>
+                    <img src="https://cdn.kastatic.org/ka-perseus-images/1da89713b9aa8067742244d916749e72561bb3cc.png">
+                </div>
+            </div>
+
+            <!-- Slide 8: Transcription Termination -->
+            <div class="slide">
+                <h1>Transcription Termination</h1>
+                <div class="slide-content">
+                    <div class="definition-box">
+                        <strong>Termination:</strong> The process of ending transcription when RNA polymerase encounters specific DNA sequences called terminators.
+                    </div>
+
+                    <h2>Two Major Bacterial Termination Strategies:</h2>
+
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Rho-Dependent Termination</h4>
+                            <p><strong>Mechanism:</strong> Rho protein binds to RNA and "climbs" toward polymerase</p>
+                            <p><strong>Process:</strong> When Rho catches up, it pulls RNA and DNA apart</p>
+                            <p><strong>Helper:</strong> Transcription stop point causes polymerase to pause</p>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>Rho-Independent Termination</h4>
+                            <p><strong>Structure:</strong> RNA forms a stable hairpin loop</p>
+                            <p><strong>Composition:</strong> C-G rich region followed by U nucleotides</p>
+                            <p><strong>Mechanism:</strong> Hairpin stalls polymerase, weak U-A bonds allow release</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Intrinsic Termination:</strong> Rho-independent termination relies on the RNA's own structure, making it more efficient and reliable.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: RNA Processing and Translation -->
+            <div class="slide">
+                <h1>After Transcription: RNA Fate</h1>
+                <div class="slide-content">
+                    <h2>Bacterial vs. Eukaryotic Differences:</h2>
+
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Bacteria</h4>
+                            <p><strong>Location:</strong> Transcription and translation in cytoplasm</p>
+                            <p><strong>Timing:</strong> Translation can start while transcription continues</p>
+                            <p><strong>Processing:</strong> Minimal RNA modifications needed</p>
+                            <p><strong>Structure:</strong> Polyribosomes form during simultaneous processes</p>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>Eukaryotes</h4>
+                            <p><strong>Location:</strong> Transcription in nucleus, translation in cytoplasm</p>
+                            <p><strong>Timing:</strong> Sequential processes—transcription must finish first</p>
+                            <p><strong>Processing:</strong> Extensive RNA processing required</p>
+                            <p><strong>Transport:</strong> mRNA must exit nucleus before translation</p>
+                        </div>
+                    </div>
+
+                    <h2>Messenger RNA (mRNA):</h2>
+                    <ul>
+                        <li>RNA transcript ready for translation</li>
+                        <li>Carries genetic code from DNA to ribosomes</li>
+                        <li>Template for protein synthesis</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Efficiency Factor:</strong> Bacteria can produce proteins faster due to coupled transcription-translation, while eukaryotes have more quality control.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Clinical and Research Applications -->
+            <div class="slide">
+                <h1>Clinical and Research Significance</h1>
+                <div class="slide-content">
+                    <h2>Medical Applications:</h2>
+                    <ul>
+                        <li><strong>Antibiotic Targets:</strong> Many antibiotics target bacterial transcription machinery</li>
+                        <li><strong>Cancer Research:</strong> Abnormal transcription patterns in tumor cells</li>
+                        <li><strong>Genetic Diseases:</strong> Mutations affecting transcription factors</li>
+                        <li><strong>Gene Therapy:</strong> Controlling gene expression through transcription</li>
+                    </ul>
+
+                    <h2>Research Tools:</h2>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>RNA-seq</h4>
+                            <p>Sequencing all transcribed RNAs in a cell</p>
+                            <p>Reveals gene expression patterns</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>ChIP-seq</h4>
+                            <p>Maps where transcription factors bind DNA</p>
+                            <p>Identifies regulatory elements</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>CRISPR Applications</h4>
+                            <p>Precise control of gene transcription</p>
+                            <p>Research and therapeutic potential</p>
+                        </div>
+                    </div>
+
+                    <div class="definition-box">
+                        <strong>Toxicology Example:</strong> Death cap mushroom toxin demonstrates how blocking transcription can be lethal—highlighting the process's fundamental importance.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Key Regulatory Concepts -->
+            <div class="slide">
+                <h1>Transcriptional Regulation</h1>
+                <div class="slide-content">
+                    <h2>Levels of Control:</h2>
+                    <ul>
+                        <li><strong>Initiation Control:</strong> Most common regulation point</li>
+                        <li><strong>Elongation Control:</strong> Pausing and anti-termination factors</li>
+                        <li><strong>Termination Control:</strong> Regulated termination vs. read-through</li>
+                    </ul>
+
+                    <h2>Regulatory Elements:</h2>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Enhancers</h4>
+                            <p>DNA sequences that increase transcription</p>
+                            <p>Can work at great distances</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Silencers</h4>
+                            <p>DNA sequences that decrease transcription</p>
+                            <p>Important for tissue-specific expression</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Activators vs. Repressors</h4>
+                            <p>Proteins that increase or decrease transcription</p>
+                            <p>Respond to cellular conditions</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Evolution Insight:</strong> More complex organisms generally have more sophisticated transcriptional control mechanisms.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12: Summary -->
+            <div class="slide">
+                <h1>Summary & Key Takeaways</h1>
+                <div class="slide-content">
+                    <h2>Essential Concepts:</h2>
+                    <ul style="font-size: 1.1em;">
+                        <li><strong>Transcription Overview:</strong> DNA → RNA conversion by RNA polymerase</li>
+                        <li><strong>Initiation:</strong> Promoters guide polymerase positioning (bacteria vs. eukaryotes differ)</li>
+                        <li><strong>Elongation:</strong> 5' to 3' RNA synthesis using 3' to 5' DNA template reading</li>
+                        <li><strong>Termination:</strong> Rho-dependent and Rho-independent mechanisms in bacteria</li>
+                        <li><strong>Organism Differences:</strong> Coupled vs. separated transcription-translation</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <h3 style="color: var(--background); border: none; margin: 0;">Central Dogma Flow</h3>
+                        <p style="font-size: 1.2em;">DNA → (Transcription) → RNA → (Translation) → Protein</p>
+                        <p>Transcription is the crucial first step in gene expression</p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <h3>Study Focus:</h3>
+                        <p style="font-size: 1.1em;">Understanding transcription mechanisms is fundamental to molecular biology, genetics, medicine, and biotechnology applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn interactive3dtilt fa-solid fa-print" id="printBtn" title="Print this slide"></button>
+            <button class="control-btn interactive3dtilt fa-solid fa-arrow-left" id="prevBtn" onclick="changeSlide(-1)"></button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+            </span>
+            <button class="control-btn interactive3dtilt fa-solid fa-arrow-right" id="nextBtn" onclick="changeSlide(1)"></button>
+            <button class="control-btn interactive3dtilt fa-solid fa-expand" id="fullscreenBtn" title="Toggle fullscreen"></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="../global/others.js"></script>
+</body>
+
+</html>

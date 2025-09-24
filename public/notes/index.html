@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes | Sunita Arya</title>
+    <link rel="stylesheet" href="../global/style.css">
+    <script src="https://kit.fontawesome.com/d63d2ac69c.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Monoton:400,700');
+    body {
+        text-align: center;
+    }
+    h1 {
+        color: var(--accent);
+        font-size: 6vi;
+        line-height: 1.2;
+        span {
+            font-family: 'Monoton', cursive;
+            font-size: 10vi;
+        };
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1rem;
+    } 
+    .noteItem {
+        border: var(--text);
+        color: var(--text);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background: var(--primary);
+        text-decoration: none;
+        width: 90%;
+        height: 2rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        font-family: 'Audiowide', sans-serif;
+        span {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+            width: 3rem;
+        }
+    }
+</style>
+<body>
+    <h1><span>Notes</span> <br> by <br> Prof. Sunita Arya</h1>
+    <main id="noteContainer">
+
+    </main>
+</body>
+<script src="../global/others.js"></script>
+<script src="home.js"></script>
+</html>

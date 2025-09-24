@@ -18,6 +18,20 @@
   }
 }
 
+body {
+  background: var(--background);
+  color: var(--text)
+}
+
+.bg-primary {
+  background: var(--primary);
+} .bg-secondary {
+  background: var(--secondary);
+} .bg-accent {
+  background: var(--accent);
+} .bg-text {
+  background: var(--text);
+}
 
 .interactive3dtilt {
   transition: transform 0.2s cubic-bezier(0.3, 1, 0.2, 1);

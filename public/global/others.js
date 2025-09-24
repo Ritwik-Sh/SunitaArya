@@ -1,7 +1,7 @@
 // Function to add tilt effect to an element
 function addTiltEffect(element) {
   if (!element) return;
-  if (navigator.hardwareConcurrency <= 4) {
+  if (navigator.hardwareConcurrency <= 4 || screen.width < 720) {
     element.style.MutationObserver = 'none'; // Disable effect on low-end devices
     element.classList.add('zoom');
     return;
