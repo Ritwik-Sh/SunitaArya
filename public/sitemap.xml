@@ -1,41 +1,46 @@
-<urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!--
- created with Free Online Sitemap Generator www.xml-sitemaps.com 
--->
-<url>
-<loc>https://sunita-arya.onrender.com/</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>1.00</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-<url>
-<loc>https://sunita-arya.onrender.com/researchPub/</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>0.85</priority>
-</url>
+  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-<url>
-<loc>https://sunita-arya.onrender.com/notes/</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>0.80</priority>
-</url>
+  <url>
+    <loc>https://sunita-arya.onrender.com/</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
 
-<url>
-<loc>https://sunita-arya.onrender.com/notes/SkeletalSystem.html</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>0.7</priority>
-</url>
+  <url>
+    <loc>https://sunita-arya.onrender.com/researchPub/</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>0.85</priority>
+  </url>
 
-<url>
-<loc>https://sunita-arya.onrender.com/notes/govInSusDev.html</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>0.7</priority>
-</url>
+  <url>
+    <loc>https://sunita-arya.onrender.com/notes/</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 
-<loc>https://sunita-arya.onrender.com/notes/Biosafety.html</loc>
-<lastmod>2025-10-03T10:30:49+00:00</lastmod>
-<priority>0.7</priority>
-</url>
+  <url>
+    <loc>https://sunita-arya.onrender.com/notes/SkeletalSystem.html</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
 
+  <url>
+    <loc>https://sunita-arya.onrender.com/notes/govInSusDev.html</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://sunita-arya.onrender.com/notes/Biosafety.html</loc>
+    <lastmod>2025-10-03T10:30:49+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
 
 </urlset>
