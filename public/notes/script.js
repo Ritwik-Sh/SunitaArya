@@ -71,6 +71,7 @@ fsBtn.addEventListener('click', () => {
             presentationContainer.msRequestFullscreen();
         }
         slides.forEach(slide => slide.style.margin = '0');
+        document.querySelector('.controls').style.height = '8vh'
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -80,6 +81,7 @@ fsBtn.addEventListener('click', () => {
             document.msExitFullscreen();
         }
         slides.forEach(slide => slide.style.margin = '20px');
+        document.querySelector('.controls').style.height = '';
     }
 });
 

@@ -3,7 +3,9 @@ notesList = [
     { title: "Muscles and Muscle Tissue", path: "load.html?doc=Muscles and Muscle Tissue.pdf", icon: "fa-solid fa-dumbbell" },,
     { title: "Transcription, Translation and Termination", path: "transcription-translation-termination.html", icon: "fa-solid fa-dna"},
     { title: "Role of Government in Sustainable Development", path: "govInSusDev.html", icon: "fa-solid fa-city"},
-    { title: "Biosafety", path: "Biosafety.html", icon: "fa-solid fa-tree"}
+    { title: "Biosafety", path: "Biosafety.html", icon: "fa-solid fa-tree"},
+    { title: "Examples of Sustaniable Development", path: "examplesSustainableDevelopment.html", icon: "fa-solid fa-fan"},
+    { title: "Convention on Biological Diversity", path: "ConventionOnBiologicalDiversity.html", icon: "fa-solid fa-fan"},
 ]
 const noteContainer = document.getElementById('noteContainer');
 document.addEventListener('DOMContentLoaded', () => {

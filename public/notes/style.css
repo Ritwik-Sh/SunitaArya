@@ -33,6 +33,7 @@ body {
     border-radius: 1rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
     overflow-y: auto;
+    scrollbar-width: thin;
     transition: transform 0.5s ease-in-out;
     transform: translateX(100%);
 }
@@ -89,6 +90,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 5px
 }
 
 ul {
@@ -142,6 +144,7 @@ li::before {
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+
 }
 
 .control-btn {
