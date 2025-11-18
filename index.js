@@ -101,10 +101,6 @@ function handlePdfResponse(response, pdfUrl, res) {
 }
 
 
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
 function queueRequest(url) {
   return new Promise((resolve, reject) => {
     requestQueue.push({ url, resolve, reject });
@@ -457,3 +453,5 @@ function getPDFLikelihoodScore(url) {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+module.exports = app;
