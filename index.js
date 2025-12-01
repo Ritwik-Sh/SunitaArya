@@ -454,4 +454,9 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
+app.get("/Biodata", (req, res) => {
+  res.redirect("db/Biodata.pdf");
+}
+)
+
 module.exports = app;
